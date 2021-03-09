@@ -17,12 +17,13 @@ covid2020['date'] = covid2020['date'].str[5:7]
 covid2020.columns = ['location', 'month', 'total_cases', 'new_cases', 'total_deaths','new_deaths']
 
 # aggregate the values by month and location, making sure not to impute missing values when summing
-monthlycovid2020 = covid2020.groupby(['location', 'month'], as_index = False).aggregate({'total_cases': max, 'new_cases': lambda x: x.sum(min_count=1), 'total_deaths': max, 'new_deaths':lambda x: x.sum(min_count=1)})
+monthlycovid2020 = covid2020.groupby(['location', 'month'], as_index = False).aggregate({'total_cases': max, 'new_cases': lambda x: x.sum(min_count=1), 
+                                                                                         'total_deaths': max, 'new_deaths': lambda x: x.sum(min_count=1)})
 
 ## 2
 
-# add case_fatality_rate to the dataframe just after the month column, this is defined as the number of deaths per confirmed case in a given period
-monthlycovid2020['case_fatality_rate'] = monthlycovid2020['total_deaths'] / monthlycovid2020['total_cases']
+# add case_fatality_rate to the dataframe, this is defined as the number of deaths per confirmed case in a given period (calendar month in this case)
+monthlycovid2020['case_fatality_rate'] = (monthlycovid2020['new_deaths'] / monthlycovid2020['new_cases'])
 
 # reorder the columns to the order specified
 cols = list(monthlycovid2020.columns)
