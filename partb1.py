@@ -10,11 +10,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument('csvname', type=str)
 args = parser.parse_args()
 
-# set the directory to the cricket folder if this hasn't already been done
-current_path = os.getcwd()
-
-if 'cricket' not in current_path:
-    current_path = os.chdir('cricket')
+# set the directory to the cricket folder
+current_path = os.chdir('cricket')
 
 # record the names of the all the txt files in the cricket directory
 filenames = sorted([filename for filename in os.listdir(current_path) if '.txt' in filename])
