@@ -1,6 +1,5 @@
 ## Part B Task 3
 import re
-import sys
 import pandas as pd
 import nltk
 import os
@@ -56,10 +55,11 @@ matchIDs = []
 for file in docIDs['filename']:
     preprocessed = preprocess(file)
     match = True
+    wordList = nltk.word_tokenize(preprocessed)
     
     # check if all the keywords are in this document
     for keyword in keywords:
-        if re.search(r'\b' + keyword + r'\b', preprocessed) == None:
+        if keyword not in wordList:
             match = False
             break
     # if all the keywords were present then add the corresponding document ID to our matched IDs list        
