@@ -1,6 +1,5 @@
 ## Part B Task 4
 import re
-import sys
 import pandas as pd
 import nltk
 import os
@@ -60,14 +59,14 @@ matchIDs = []
 for file in docIDs['filename']:
     preprocessed = preprocess(file)
     match = True
+    wordList = nltk.word_tokenize(preprocessed)
     
     # create a list of stem words for every word in the document
-    wordList = nltk.word_tokenize(preprocessed)
     stemList = [porterStemmer.stem(word) for word in wordList]
     
     # check if all the keywords are in this document OR there are least inexact stem matches for each keyword in this document
     for keyword in keywords:
-        if re.search(r'\b' + keyword + r'\b', preprocessed) == None:
+        if keyword not in wordList:
             if porterStemmer.stem(keyword) not in stemList:
                 match = False
                 break
